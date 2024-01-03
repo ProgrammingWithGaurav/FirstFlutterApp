@@ -21,18 +21,34 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget{
-  @override
-  Widget build(BuildContext context){
-    return Scaffold(appBar: AppBar(title: Text("Hello World")),
-    body: TextInputWidget()
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
-    );
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String text = "";
+
+  void setText(String text){
+    this.setState(() {
+      this.text = text;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(appBar: AppBar(title: Text("Hello World")),
+    body: Column(children: <Widget>[TextInputWidget(this.setText), Text(this.text)]));
   }
 }
 
+
 class TextInputWidget extends StatefulWidget {
-  const TextInputWidget({super.key});
+  final Function(String) callback;
+
+  TextInputWidget(this.callback);
 
   @override
   State<TextInputWidget> createState() => _TextInputWidgetState();
@@ -40,7 +56,6 @@ class TextInputWidget extends StatefulWidget {
 
 class _TextInputWidgetState extends State<TextInputWidget> {
   final controller = TextEditingController();
-  String text = "";
 
   @override
   void dispose(){
@@ -49,30 +64,24 @@ class _TextInputWidgetState extends State<TextInputWidget> {
     controller.dispose();
   }
 
-  void setText(text){
-    if(text == "hello"){
-      controller.clear();
-      text = "";
-    }
-    setState(() {
-      this.text = text;
-    });
+  @override
+  void click(){
+    widget.callback(controller.text);
+    controller.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: <Widget>[
-          TextField(
+        return TextField(
                 controller: this.controller,
                 decoration: InputDecoration(
                     prefixIcon: Icon(Icons.message),
-                    labelText: "Type a message"
-                ),
-                onChanged: (text) => setText(text),
-          ),
-        Text(this.text),
-        ]
-    );
+                    labelText: "Type a message",
+                    suffixIcon: IconButton(icon: Icon(Icons.send),
+                    splashColor: Colors.deepPurple,
+                    tooltip: "Post Message",
+                    onPressed: this.click,
+                    ),
+                ));
   }
 }
