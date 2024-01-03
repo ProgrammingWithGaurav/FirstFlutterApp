@@ -24,6 +24,13 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget{
   @override
   Widget build(BuildContext context){
-    return Scaffold();
+    return Scaffold(appBar: AppBar(title: Text("Hello World")), body: Column(children: <Widget>[TestWidget(),TestWidget(),TestWidget()]));
+  }
+}
+
+class TestWidget extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Text("Hello World!");
   }
 }
