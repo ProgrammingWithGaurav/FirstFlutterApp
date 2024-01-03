@@ -24,13 +24,55 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget{
   @override
   Widget build(BuildContext context){
-    return Scaffold(appBar: AppBar(title: Text("Hello World")), body: Column(children: <Widget>[TestWidget(),TestWidget(),TestWidget()]));
+    return Scaffold(appBar: AppBar(title: Text("Hello World")),
+    body: TextInputWidget()
+
+    );
   }
 }
 
-class TestWidget extends StatelessWidget{
+class TextInputWidget extends StatefulWidget {
+  const TextInputWidget({super.key});
+
   @override
-  Widget build(BuildContext context){
-    return Text("Hello World!");
+  State<TextInputWidget> createState() => _TextInputWidgetState();
+}
+
+class _TextInputWidgetState extends State<TextInputWidget> {
+  final controller = TextEditingController();
+  String text = "";
+
+  @override
+  void dispose(){
+    // refreshing the controller when a state is change
+    super.dispose();
+    controller.dispose();
+  }
+
+  void setText(text){
+    if(text == "hello"){
+      controller.clear();
+      text = "";
+    }
+    setState(() {
+      this.text = text;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+          TextField(
+                controller: this.controller,
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.message),
+                    labelText: "Type a message"
+                ),
+                onChanged: (text) => setText(text),
+          ),
+        Text(this.text),
+        ]
+    );
   }
 }
