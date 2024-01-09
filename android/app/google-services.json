@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "312150853521",
+    "project_id": "fluttermessageapp-7820f",
+    "storage_bucket": "fluttermessageapp-7820f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312150853521:android:0d36104ed7fb2aea7bbc30",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAi1FWMPW7DRHQd3_rZS_pnTR_m4NlJoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
