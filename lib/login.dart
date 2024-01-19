@@ -34,11 +34,8 @@ class _BodyState extends State<Body> {
   void click() {
     signInWithGoogle().then((user) => {
           this.user = user,
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      MyHomePage(user.currentUser!.displayName!)))
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MyHomePage(user)))
         });
   }
 
