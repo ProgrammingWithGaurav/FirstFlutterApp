@@ -26,9 +26,14 @@ Future<List<Post>> getAllMessages() async {
     (dataSnapshot.snapshot.value as Map<dynamic, dynamic>)
         .forEach((key, value) {
       var post = createPost(value);
-      post.setId(dbRef.child('posts' + key));
+      post.setId(dbRef.child('posts/' + key));
       posts.add(post);
     });
   }
   return posts;
+}
+
+// function to delete message with given id
+void deleteMessage(String id) {
+  dbRef.child('posts/' + id).remove();
 }

@@ -28,6 +28,11 @@ class Post {
     this._id = id;
   }
 
+  // getter for id
+  String getId() {
+    return this._id!.key as String;
+  }
+
   // function to convert post object to json to store in database
   Map<String, dynamic> toJson() {
     return {
@@ -35,6 +40,10 @@ class Post {
       'usersLiked': this.usersLiked.toList(),
       'body': this.body,
     };
+  }
+
+  deletePost() {
+    deleteMessage(this._id!.key as String);
   }
 }
 

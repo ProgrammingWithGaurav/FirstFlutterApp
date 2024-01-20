@@ -46,6 +46,18 @@ class _PostListState extends State<PostList> {
                       : Colors.grey,
                 ),
                 onPressed: () => this.like(() => post.likePost(widget.user))),
+            // delete button
+            IconButton(
+              icon: Icon(Icons.delete),
+              color: Colors.red[300],
+              splashColor: Colors.red,
+              onPressed: () => {
+                this.setState(() {
+                  post.deletePost();
+                  this.widget.listItems.removeAt(index);
+                })
+              },
+            ),
           ])
         ]));
       },
