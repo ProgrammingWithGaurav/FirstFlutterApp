@@ -32,6 +32,7 @@ class _TextInputWidgetState extends State<TextInputWidget> {
         controller: this.controller,
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.message),
+          filled: true,
           labelText: "Type a message",
           suffixIcon: IconButton(
             icon: Icon(Icons.send),

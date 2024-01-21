@@ -27,6 +27,11 @@ class _PostListState extends State<PostList> {
         var post = this.widget.listItems[index];
         return Card(
             child: Row(children: <Widget>[
+          Container(
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(post.profilePic),
+              ),
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 10)),
           Expanded(
               child: ListTile(
             title: Text(post.body),
@@ -46,18 +51,20 @@ class _PostListState extends State<PostList> {
                       : Colors.grey,
                 ),
                 onPressed: () => this.like(() => post.likePost(widget.user))),
-            // delete button
-            IconButton(
-              icon: Icon(Icons.delete),
-              color: Colors.red[300],
-              splashColor: Colors.red,
-              onPressed: () => {
-                this.setState(() {
-                  post.deletePost();
-                  this.widget.listItems.removeAt(index);
-                })
-              },
-            ),
+            // render delete button if author of post is current user
+            post.author == widget.user.currentUser?.displayName
+                ? IconButton(
+                    icon: Icon(Icons.delete),
+                    color: Colors.red[300],
+                    splashColor: Colors.red,
+                    onPressed: () => {
+                      this.setState(() {
+                        post.deletePost();
+                        this.widget.listItems.removeAt(index);
+                      })
+                    },
+                  )
+                : Container(),
           ])
         ]));
       },

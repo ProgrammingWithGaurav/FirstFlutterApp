@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/db.dart';
 import 'post.dart';
@@ -18,9 +19,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void newPost(String text) {
     this.setState(() {
-      var post = new Post(text, widget.user.currentUser?.displayName as String);
-      savePost(post);
-      post.setId(savePost(post));
+      var post = new Post(text, widget.user.currentUser?.displayName as String,
+          widget.user.currentUser?.photoURL as String);
+      DatabaseReference id = savePost(post);
+      post.setId(id);
       posts.add(post);
     });
   }
@@ -42,10 +44,23 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Home")),
-        body: Column(children: <Widget>[
-          Expanded(child: PostList(this.posts, widget.user)),
-          TextInputWidget(this.newPost),
-        ]));
+      appBar: AppBar(
+        title: Text("Messages"),
+      ),
+      body: Container(
+          child: Column(children: <Widget>[
+            Expanded(child: PostList(this.posts, widget.user)),
+            TextInputWidget(this.newPost),
+          ]),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: Image.network(
+                      'https://source.unsplash.com/1600x900/?wallpaper')
+                  .image,
+              fit: BoxFit.cover,
+              // lower the z-index of the image
+            ),
+          )),
+    );
   }
 }

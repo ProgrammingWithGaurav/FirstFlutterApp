@@ -5,10 +5,11 @@ import 'package:myapp/db.dart';
 class Post {
   String body;
   String author;
+  String profilePic;
   Set usersLiked = {};
   DatabaseReference? _id;
 
-  Post(this.body, this.author);
+  Post(this.body, this.author, this.profilePic);
 
   void likePost(FirebaseAuth user) {
     if (this.usersLiked.contains(user.currentUser?.uid)) {
@@ -39,6 +40,7 @@ class Post {
       'author': this.author,
       'usersLiked': this.usersLiked.toList(),
       'body': this.body,
+      'profilePic': this.profilePic,
     };
   }
 
@@ -53,11 +55,13 @@ Post createPost(record) {
     'author': '',
     'usersLiked': [],
     'body': '',
+    'profilPic': ''
   };
   record.forEach((key, value) => {
         attributes[key] = value,
       });
-  Post post = new Post(attributes['body'], attributes['author']);
+  Post post = new Post(
+      attributes['body'], attributes['author'], attributes['profilePic']);
   post.usersLiked = new Set.from(attributes['usersLiked']);
   return post;
 }
